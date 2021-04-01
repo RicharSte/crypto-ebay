@@ -1,24 +1,44 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import (
+    CreateView, 
+    DetailView,
+    UpdateView,
+    DeleteView
+)
 
 from .models import Product
 
-from .forms import ProductCreation
-
-@login_required(login_url='login')
-def create_product(request):
-    if request.method == 'POST':
-        form = ProductCreation(request.POST)
-        if form.is_valid():
-            product = form.save(commit=False)
-            product.author = request.user
-            product.save()
-            item = form.cleaned_data.get('title')
-            messages.success(request, f'Product with title - {item} has been created')
-            return redirect('home-page')
-    else:
-        form = ProductCreation()
+class ProductDitailView(DetailView):
+    model = Product
+    
+class ProductCreateView(LoginRequiredMixin, CreateView):
+    model = Product
+    fields = ['title', 'discription', 'price', 'paymet_method', 'contact_info', 'location']
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+class ProductUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Product
+    fields = ['title', 'discription', 'price', 'paymet_method', 'contact_info', 'location']
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+    def test_func(self):
+        product = self.get_object()
+        if self.request.user == product.author:
+            return True
         
-    return render(request, 'products/create.html', {'form': form, 'title': 'Sell a new product'})
-            
+class ProductDeletelView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Product
+    success_url = '/'
+    
+    def test_func(self):
+        product = self.get_object()
+        if self.request.user == product.author:
+            return True
+        

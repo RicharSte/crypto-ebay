@@ -17,15 +17,25 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth import views as auth_views
 
-from marketplace.views import home_page
+from marketplace.views import ProductListView
 from users.views import register
-from products.views import create_product
+from products.views import(
+    ProductDitailView, 
+    ProductCreateView,
+    ProductUpdateView,
+    ProductDeletelView
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_page, name='home-page'),
+    path('', ProductListView.as_view(), name='home-page'),
+    path('product/<int:pk>/', ProductDitailView.as_view(), name='product-details'),
+    
     path('registration/', register, name='registration'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-    path('sell/', create_product, name='create-product'),
+    
+    path('product/new/', ProductCreateView.as_view(), name='create-product'),
+    path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product-update'),
+    path('product/<int:pk>/delete/', ProductDeletelView.as_view(), name='product-delete'),
 ]

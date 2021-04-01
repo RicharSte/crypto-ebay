@@ -1,4 +1,10 @@
 from django.shortcuts import render
+from django.views.generic import ListView
 
-def home_page(request):
-    return render(request, 'marketplace\home.html', {})
+from products.models import Product
+
+class ProductListView(ListView):
+   model = Product
+   template_name = 'marketplace/home.html'
+   context_object_name = 'items'
+   

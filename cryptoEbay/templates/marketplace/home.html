@@ -1,4 +1,16 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
-Hi, Bro!
+    {% for item in items %}
+        <article class="media content-section">
+          {% comment %} <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"> {% endcomment %}
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ item.author }}</a>
+              {% comment %} <small class="text-muted">{{ item.date_posted|date:"F d, Y" }}</small> {% endcomment %}
+            </div>
+            <h2><a class="article-title" href="{% url 'product-details' item.id %}">{{ item.title }}</a></h2>
+            <p class="article-content">{{ item.discription }}</p>
+          </div>
+        </article>
+    {% endfor %}
 {% endblock content %}

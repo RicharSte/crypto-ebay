@@ -11,13 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'marketplace/main.css' %}">
-
-    {% comment %} {% if title %}
-        <title>Todo App- {{ title }}</title>
-    {% else %}
-        <title>Todo App</title>
-    {% endif %} {% endcomment %}
-</head>
+    
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
@@ -30,6 +24,7 @@
             {% if user.is_authenticated %}
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'home-page' %}">Market</a>
+              <a class="nav-item nav-link" href="{% url 'create-product' %}">Sell something</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
