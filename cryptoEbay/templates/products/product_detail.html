@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
     <article class="media content-section">
-            {% comment %} <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}"> {% endcomment %}
+            <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
             <div class="media-body">
                 <div class="article-metadata">
                     <a class="mr-2" href="#">{{ object.author }}</a>
-                    {% comment %} <small class="text-muted">{{ item.date_posted|date:"F d, Y" }}</small> {% endcomment %}
                     {% if object.author == user %}
                         <div>
                         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'product-update' object.id %}">Update</a>
