@@ -7,4 +7,4 @@ class ProductListView(ListView):
    model = Product
    template_name = 'marketplace/home.html'
    context_object_name = 'items'
-   
+   paginate_by = 5  

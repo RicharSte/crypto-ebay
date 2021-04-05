@@ -20,7 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from marketplace.views import ProductListView
-from users.views import register, profile
+from users.views import register, profile, UserItemListView
 from products.views import(
     ProductDitailView, 
     ProductCreateView,
@@ -37,6 +37,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     path('profile/', profile, name='profile'),
+    path('user/<str:username>/', UserItemListView.as_view(), name='user-items'),
     
     path('product/new/', ProductCreateView.as_view(), name='create-product'),
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product-update'),

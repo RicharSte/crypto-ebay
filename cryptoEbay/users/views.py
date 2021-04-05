@@ -1,6 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.views.generic import ListView
+
+from products.models import Product
 
 from .forms import(
     UserRegiesterForm,
@@ -44,3 +48,13 @@ def profile(request):
     }
     
     return render(request, 'users/profile.html', context)
+
+class UserItemListView(ListView):
+   model = Product
+   template_name = 'users/user_post.html'
+   context_object_name = 'items'
+   paginate_by = 5 
+   
+   def get_queryset(self):
+       user = get_object_or_404(User, username=self.kwargs.get('username'))
+       return Product.objects.filter(author=user)
