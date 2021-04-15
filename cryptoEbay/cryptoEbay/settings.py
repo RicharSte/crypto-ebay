@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'marketplace.apps.MarketplaceConfig',
     
     'crispy_forms',
+    'bs4'
 ]
 
 MIDDLEWARE = [

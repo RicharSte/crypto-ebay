@@ -9,6 +9,8 @@
             </div>
             <h2><a class="article-title" href="{% url 'product-details' item.id %}">{{ item.title }}</a></h2>
             <p class="article-content">{{ item.discription }}</p>
+            <p class="article-content">{{ item.price }}$</p>
+            <p class="article-content">{{ item.paymet_method }}</p>
           </div>
         </article>
     {% endfor %}
